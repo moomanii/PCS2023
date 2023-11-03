@@ -1,0 +1,44 @@
+def fasta(data):
+    fasta_dict = {}
+    current_id = None
+    current_sequence = []
+
+    for line in data:
+        if line.startswith('>'):
+            if current_id:
+                fasta_dict[current_id] = ''.join(current_sequence)
+            current_id = line[1:].strip()
+            current_sequence = []
+        else:
+            current_sequence.append(line.strip())
+
+    if current_id:
+        fasta_dict[current_id] = ''.join(current_sequence)
+
+    return fasta_dict
+
+def gc_content(dna_string):
+    gc_count = dna_string.count('G') + dna_string.count('C')
+    total_bases = len(dna_string)
+    return (gc_count / total_bases) * 100 if total_bases > 0 else 0
+
+def find_highest_gc_content(data):
+    fasta_dict = fasta(data)
+    max_gc_content = 0
+    max_gc_id = None
+
+    for sequence_id, sequence in fasta_dict.items():
+        content = gc_content(sequence)
+        if content > max_gc_content:
+            max_gc_content = content
+            max_gc_id = sequence_id
+
+    return max_gc_id, max_gc_content
+
+with open("rosalind_gc.txt", "r") as file:
+    fasta_data = file.read().splitlines()
+
+result_id, result_content = find_highest_gc_content(fasta_data)
+
+print(result_id)
+print(f"{result_content:.6f}")
