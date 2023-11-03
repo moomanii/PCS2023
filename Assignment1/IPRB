@@ -1,0 +1,13 @@
+k = 29
+m = 28
+n = 30
+
+total = k + m + n
+
+R = (n/total)*((n-1)/(total-1))
+H = (m/total)*((m-1)/(total-1))
+RH = (n/total)*(m/(total-1))*2
+
+PRB = R + H*1/4 + RH*1/2
+
+print(1-PRB)
