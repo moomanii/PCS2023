@@ -1,0 +1,18 @@
+def rabbit_pairs(n, m):
+    generations = [1] + [0] * (m - 1)
+    for month in range(1, n):
+        new_generation = 0
+
+        for i in range(1, m):
+            new_generation += generations[i]
+        generations = [new_generation] + generations[:-1]
+
+    total_pairs = sum(generations)
+
+    return total_pairs
+
+n = 87
+m = 20
+
+result = rabbit_pairs(n, m)
+print(result)
