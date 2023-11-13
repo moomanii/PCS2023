@@ -1,0 +1,23 @@
+from Bio import SeqIO
+from Bio.Seq import Seq
+
+input_filename = "rosalind_splc.txt"
+
+dna_sequence = ""
+
+introns = []
+
+for record in SeqIO.parse(input_filename, "fasta"):
+    if dna_sequence == "":
+        dna_sequence = str(record.seq)
+    else:
+        introns.append(str(record.seq))
+
+for intron in introns:
+    dna_sequence = dna_sequence.replace(intron, "")
+
+rna_sequence = dna_sequence.replace("T", "U")
+
+protein_sequence = Seq(rna_sequence).translate()
+
+print(protein_sequence)

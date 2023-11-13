@@ -1,20 +1,16 @@
 from Bio import SeqIO
 
-# FASTA 파일 이름
 input_filename = "rosalind_grph.txt"
 
-# DNA 문자열 저장 리스트 초기화
 sequences = []
 
-# FASTA 파일에서 시퀀스 읽기
 for record in SeqIO.parse(input_filename, "fasta"):
     sequences.append((record.id, str(record.seq)))
 
-# O3 overlap 그래프를 생성하는 함수
 def create_o3_overlap_graph(dna_strings):
     edges = []
 
-    k = 3  # Length of overlap
+    k = 3  
 
     for i in range(len(dna_strings)):
         for j in range(len(dna_strings)):
@@ -27,9 +23,7 @@ def create_o3_overlap_graph(dna_strings):
 
     return edges
 
-# O3 overlap 그래프 생성
 graph_edges = create_o3_overlap_graph(sequences)
 
-# 결과 출력
 for edge in graph_edges:
     print(f"{edge[0]} {edge[1]}")
