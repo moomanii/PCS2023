@@ -1,0 +1,21 @@
+from Bio.Seq import Seq
+
+def find_reverse_palindromes(sequence):
+    results = []
+    for i in range(len(sequence)):
+        for j in range(4, 12):
+            substr = sequence[i:i+j]
+            rev_comp = str(Seq(substr).reverse_complement())
+            if substr == rev_comp:
+                results.append((i + 1, j))
+    return results
+
+fasta_sequence = ">Sequence TCAATGCATGCGGGTCTATATGCAT"
+
+lines = fasta_sequence.split('\n')
+sequence = ''.join(lines[1:])
+
+reverse_palindromes = find_reverse_palindromes(sequence)
+
+for position, length in reverse_palindromes:
+    print(position, length)
